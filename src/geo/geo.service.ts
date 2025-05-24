@@ -24,7 +24,7 @@ export class GeoService {
         this.httpService.get<GeoApiResponse>(url),
       );
       const { results } = response.data;
-      if (results.length > 0) {
+      if (results?.length) {
         const {
           geometry: { lat, lng },
           annotations: { currency },
