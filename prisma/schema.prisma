@@ -1,0 +1,18 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Aggregates {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  location   String   @unique
+  aggregate  Json
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("aggregates")
+}
