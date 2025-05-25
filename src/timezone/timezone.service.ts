@@ -29,6 +29,7 @@ export class TimezoneService {
       );
 
       return {
+        status: response.data.status,
         data: response.data,
       };
     } catch (error: unknown) {

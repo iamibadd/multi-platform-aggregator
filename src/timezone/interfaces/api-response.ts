@@ -14,11 +14,11 @@ export interface TimezoneApiResponse {
 }
 
 export interface TimezoneSuccessResponse {
-  data: TimezoneApiResponse;
+  data: Omit<TimezoneApiResponse, 'status'>;
 }
 
 interface TimezoneErrorResponse {
-  status: 'error';
+  status: string;
   msg: string;
 }
 

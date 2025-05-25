@@ -1,5 +1,4 @@
 export interface WeatherApiResponse {
-  coord: Coordinates;
   weather: Weather[];
 }
 
@@ -17,7 +16,6 @@ export interface Weather {
 
 export interface WeatherSuccessResponse {
   status: 'success';
-  coordinates: Coordinates;
   weather: Weather;
 }
 

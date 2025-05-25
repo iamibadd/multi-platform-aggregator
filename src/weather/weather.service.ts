@@ -24,10 +24,9 @@ export class WeatherService {
       const response = await firstValueFrom(
         this.httpService.get<WeatherApiResponse>(url),
       );
-      const { coord, weather } = response.data;
+      const { weather } = response.data;
       return {
         status: 'success',
-        coordinates: coord,
         weather: { ...weather[0] },
       };
     } catch (error: unknown) {
