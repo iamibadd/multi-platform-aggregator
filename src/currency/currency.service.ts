@@ -7,6 +7,7 @@ import {
   CurrencyApiResponse,
   CurrencyResponse,
 } from './interfaces/api-response';
+import { handleError } from 'src/utils/error-catch';
 
 @Injectable()
 export class CurrencyService {
@@ -34,16 +35,7 @@ export class CurrencyService {
         conversion_rates,
       };
     } catch (error: unknown) {
-      if (error instanceof Error) {
-        return {
-          status: 'error',
-          msg: error.message,
-        };
-      }
-      return {
-        status: 'error',
-        msg: `Something went wrong `,
-      };
+      return handleError(error);
     }
   }
 }

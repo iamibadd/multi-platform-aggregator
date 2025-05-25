@@ -7,6 +7,7 @@ import {
   TimezoneApiResponse,
   TimezoneResponse,
 } from './interfaces/api-response';
+import { handleError } from 'src/utils/error-catch';
 
 @Injectable()
 export class TimezoneService {
@@ -31,16 +32,7 @@ export class TimezoneService {
         data: response.data,
       };
     } catch (error: unknown) {
-      if (error instanceof Error) {
-        return {
-          status: 'error',
-          msg: error.message,
-        };
-      }
-      return {
-        status: 'error',
-        msg: `Something went wrong `,
-      };
+      return handleError(error);
     }
   }
 }

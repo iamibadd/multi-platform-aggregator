@@ -4,6 +4,7 @@ import { firstValueFrom } from 'rxjs';
 import { AllConfigType } from 'src/config/config.type';
 import { ConfigService } from '@nestjs/config';
 import { GeoApiResponse, GeoResponse } from './interfaces/api-response';
+import { handleError } from 'src/utils/error-catch';
 
 @Injectable()
 export class GeoService {
@@ -33,16 +34,7 @@ export class GeoService {
       }
       return { status: 'error', msg: `No geo data found for ${location}` };
     } catch (error: unknown) {
-      if (error instanceof Error) {
-        return {
-          status: 'error',
-          msg: error.message,
-        };
-      }
-      return {
-        status: 'error',
-        msg: `Something went wrong `,
-      };
+      return handleError(error);
     }
   }
 }

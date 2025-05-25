@@ -4,6 +4,7 @@ import { firstValueFrom } from 'rxjs';
 import { AllConfigType } from 'src/config/config.type';
 import { ConfigService } from '@nestjs/config';
 import { WeatherApiResponse, WeatherResponse } from './interfaces/api-response';
+import { handleError } from 'src/utils/error-catch';
 
 @Injectable()
 export class WeatherService {
@@ -30,16 +31,7 @@ export class WeatherService {
         weather: { ...weather[0] },
       };
     } catch (error: unknown) {
-      if (error instanceof Error) {
-        return {
-          status: 'error',
-          msg: error.message,
-        };
-      }
-      return {
-        status: 'error',
-        msg: `Something went wrong `,
-      };
+      return handleError(error);
     }
   }
 }
