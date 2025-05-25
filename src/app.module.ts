@@ -18,6 +18,8 @@ import { AggregateService } from 'src/aggregate/aggregate.service';
 import { AggregateModule } from 'src/aggregate/aggregate.module';
 import { AggregateController } from 'src/aggregate/aggregate.controller';
 import { HttpModule } from '@nestjs/axios';
+import { MemoryCacheModule } from './memory-cache/memory-cache.module';
+import { MemoryCacheService } from './memory-cache/memory-cache.service';
 
 @Module({
   imports: [
@@ -35,6 +37,7 @@ import { HttpModule } from '@nestjs/axios';
     CacheModule,
     AggregateModule,
     HttpModule,
+    MemoryCacheModule,
   ],
   controllers: [AggregateController],
   providers: [
@@ -45,6 +48,7 @@ import { HttpModule } from '@nestjs/axios';
     CurrencyService,
     CacheService,
     AggregateService,
+    MemoryCacheService,
   ],
 })
 export class AppModule {}

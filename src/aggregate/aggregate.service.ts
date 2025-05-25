@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CacheService } from 'src/cache/cache.service';
+import { MemoryCacheService } from 'src/memory-cache/memory-cache.service';
 import { GeoService } from 'src/geo/geo.service';
 import { WeatherService } from 'src/weather/weather.service';
 import { TimezoneService } from 'src/timezone/timezone.service';
@@ -16,6 +17,7 @@ import { AggregateSuccessDto, AggregateErrorDto } from './dtos/aggregate.dto';
 export class AggregateService {
   constructor(
     private readonly cache: CacheService,
+    private readonly memoryCache: MemoryCacheService,
     private readonly geoService: GeoService,
     private readonly weatherService: WeatherService,
     private readonly timezoneService: TimezoneService,
@@ -26,6 +28,12 @@ export class AggregateService {
     location: string,
   ): Promise<AggregateSuccessDto | AggregateErrorDto> {
     const loc = location.toLowerCase();
+
+    const getFromMemory = this.memoryCache.getMemoryCache(loc);
+    if (getFromMemory) {
+      const cachedData = getFromMemory as Partial<AggregateSuccessDto>;
+      return new AggregateSuccessDto(cachedData);
+    }
 
     const getFromDb = await this.cache.getCachedData(loc);
 
@@ -63,6 +71,7 @@ export class AggregateService {
         currency,
       };
 
+      this.memoryCache.setMemoryCache(loc, aggregates);
       await this.cache.setCachedData(loc, aggregates);
 
       return new AggregateSuccessDto(aggregates);

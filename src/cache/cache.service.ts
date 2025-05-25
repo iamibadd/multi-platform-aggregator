@@ -4,6 +4,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 @Injectable()
 export class CacheService {
   constructor(private prisma: PrismaService) {}
+  private readonly TTL = 10 * 60 * 1000;
 
   async getCachedData(location: string) {
     const record = await this.prisma.aggregates.findUnique({
@@ -11,8 +12,7 @@ export class CacheService {
     });
     if (
       record &&
-      new Date().getTime() - new Date(record.updatedAt).getTime() <
-        10 * 60 * 1000
+      new Date().getTime() - new Date(record.updatedAt).getTime() < this.TTL
     ) {
       return record.aggregate;
     }
