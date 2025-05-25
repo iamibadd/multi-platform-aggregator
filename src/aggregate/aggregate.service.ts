@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { CacheService } from 'src/cache/cache.service';
 import { GeoService } from 'src/geo/geo.service';
 import { WeatherService } from 'src/weather/weather.service';
 import { TimezoneService } from 'src/timezone/timezone.service';
@@ -15,7 +15,7 @@ import { AggregateSuccessDto, AggregateErrorDto } from './dtos/aggregate.dto';
 @Injectable()
 export class AggregateService {
   constructor(
-    private readonly prisma: PrismaService,
+    private readonly cache: CacheService,
     private readonly geoService: GeoService,
     private readonly weatherService: WeatherService,
     private readonly timezoneService: TimezoneService,
@@ -25,6 +25,15 @@ export class AggregateService {
   async aggregates(
     location: string,
   ): Promise<AggregateSuccessDto | AggregateErrorDto> {
+    const loc = location.toLowerCase();
+
+    const getFromDb = await this.cache.getCachedData(loc);
+
+    if (getFromDb) {
+      const cachedData = getFromDb as Partial<AggregateSuccessDto>;
+      return new AggregateSuccessDto(cachedData);
+    }
+
     const geo: GeoResponse = await this.geoService.getCoordinates(location);
     if (geo.status === 'success') {
       const {
@@ -44,7 +53,7 @@ export class AggregateService {
         this.currencyService.getCurrency(iso_code),
       ]);
 
-      return {
+      const aggregates: AggregateSuccessDto = {
         status: 'success',
         location,
         geo,
@@ -53,11 +62,17 @@ export class AggregateService {
         news,
         currency,
       };
+
+      await this.cache.setCachedData(loc, aggregates);
+
+      return new AggregateSuccessDto(aggregates);
     }
 
-    return {
+    const error: AggregateErrorDto = {
       status: 'error',
       msg: `Failed to get geo data for ${location}`,
     };
+
+    return new AggregateErrorDto(error);
   }
 }

@@ -6,6 +6,7 @@ import { WeatherModule } from 'src/weather/weather.module';
 import { TimezoneModule } from 'src/timezone/timezone.module';
 import { NewsModule } from 'src/news/news.module';
 import { CurrencyModule } from 'src/currency/currency.module';
+import { CacheModule } from 'src/cache/cache.module';
 
 @Module({
   controllers: [AggregateController],
@@ -16,6 +17,7 @@ import { CurrencyModule } from 'src/currency/currency.module';
     TimezoneModule,
     NewsModule,
     CurrencyModule,
+    CacheModule,
   ],
 })
 export class AggregateModule {}
