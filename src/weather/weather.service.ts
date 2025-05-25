@@ -24,10 +24,11 @@ export class WeatherService {
       const response = await firstValueFrom(
         this.httpService.get<WeatherApiResponse>(url),
       );
-      const { weather } = response.data;
+      const { weather, main } = response.data;
       return {
         status: 'success',
         weather: { ...weather[0] },
+        temperature: main,
       };
     } catch (error: unknown) {
       return handleError(error);
