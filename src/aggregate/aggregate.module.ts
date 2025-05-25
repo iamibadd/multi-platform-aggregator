@@ -5,10 +5,17 @@ import { GeoModule } from 'src/geo/geo.module';
 import { WeatherModule } from 'src/weather/weather.module';
 import { TimezoneModule } from 'src/timezone/timezone.module';
 import { NewsModule } from 'src/news/news.module';
+import { CurrencyModule } from 'src/currency/currency.module';
 
 @Module({
   controllers: [AggregateController],
   providers: [AggregateService],
-  imports: [GeoModule, WeatherModule, TimezoneModule, NewsModule],
+  imports: [
+    GeoModule,
+    WeatherModule,
+    TimezoneModule,
+    NewsModule,
+    CurrencyModule,
+  ],
 })
 export class AggregateModule {}

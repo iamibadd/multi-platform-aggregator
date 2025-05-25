@@ -18,7 +18,6 @@ export class NewsService {
       infer: true,
     });
     const url = `${api}/v2/everything?q=${location}&sortBy=publishedAt&apiKey=${apiKey}&pageSize=1`;
-    console.log(url);
 
     try {
       const response = await firstValueFrom(

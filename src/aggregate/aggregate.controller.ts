@@ -5,7 +5,7 @@ import { AggregateService } from './aggregate.service';
 export class AggregateController {
   constructor(private readonly aggregateService: AggregateService) {}
   @Get('')
-  async aggregates(@Query('location') location: string) {
-    return this.aggregateService.aggregates(location);
+  async aggregates(@Query('currency') currency: string) {
+    return this.aggregateService.aggregates(currency);
   }
 }
