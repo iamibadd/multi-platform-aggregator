@@ -23,7 +23,7 @@ class EnvironmentVariablesValidator {
   WEATHER_API: string;
 
   @IsString()
-  WEATHER_API_API_KEY: string;
+  WEATHER_API_KEY: string;
 
   @IsUrl({ require_tld: true })
   TIMEZONE_API: string;
@@ -35,13 +35,13 @@ class EnvironmentVariablesValidator {
   NEWS_API: string;
 
   @IsString()
-  NEWS_API_API_KEY: string;
+  NEWS_API_KEY: string;
 
   @IsUrl({ require_tld: true })
   CURRENCY_API: string;
 
   @IsString()
-  CURRENCY_API_API_KEY: string;
+  CURRENCY_API_KEY: string;
 }
 
 export default registerAs<AppConfig>('app', () => {
@@ -53,12 +53,12 @@ export default registerAs<AppConfig>('app', () => {
     geoLocationApi: process.env.GEO_LOCATION_API || '',
     geoLocationApiKey: process.env.GEO_LOCATION_API_KEY || '',
     weatherApi: process.env.WEATHER_API || '',
-    weatherApiKey: process.env.WEATHER_API_API_KEY || '',
+    weatherApiKey: process.env.WEATHER_API_KEY || '',
     timezoneApi: process.env.TIMEZONE_API || '',
     timezoneApiKey: process.env.TIMEZONE_API_KEY || '',
     newsApi: process.env.NEWS_API || '',
-    newsApiKey: process.env.NEWS_API_API_KEY || '',
+    newsApiKey: process.env.NEWS_API_KEY || '',
     currencyApi: process.env.CURRENCY_API || '',
-    currencyApiKey: process.env.CURRENCY_API_API_KEY || '',
+    currencyApiKey: process.env.CURRENCY_API_KEY || '',
   };
 });
