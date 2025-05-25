@@ -15,7 +15,7 @@ export class TimezoneService {
     private configService: ConfigService<AllConfigType>,
   ) {}
 
-  async getWeather(lat: number, lng: number): Promise<TimezoneResponse> {
+  async getTimezone(lat: number, lng: number): Promise<TimezoneResponse> {
     const api = this.configService.get('app.timezoneApi', { infer: true });
     const apiKey = this.configService.get('app.timezoneApiKey', {
       infer: true,
